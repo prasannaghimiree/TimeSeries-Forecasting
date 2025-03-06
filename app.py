@@ -101,42 +101,42 @@ def get_forecast():
     return jsonify(result)
 
 
-@app.route("/plot/matplotlib", methods=["GET"])
-def matplotlib_plot():
-    forecast = generate_forecast()
+# @app.route("/plot/matplotlib", methods=["GET"])
+# def matplotlib_plot():
+#     forecast = generate_forecast()
 
-    plt.figure(figsize=(12, 6))
-    forecast.plot(kind="line", marker="o", title="6-Month Sales Forecast")
-    plt.xlabel("Date")
-    plt.ylabel("Sales")
-    plt.grid(True)
-    plt.tight_layout()
+#     plt.figure(figsize=(12, 6))
+#     forecast.plot(kind="line", marker="o", title="6-Month Sales Forecast")
+#     plt.xlabel("Date")
+#     plt.ylabel("Sales")
+#     plt.grid(True)
+#     plt.tight_layout()
 
-    img_buffer = BytesIO()
-    plt.savefig(img_buffer, format="png")
-    img_buffer.seek(0)
-    plt.close()
+#     img_buffer = BytesIO()
+#     plt.savefig(img_buffer, format="png")
+#     img_buffer.seek(0)
+#     plt.close()
 
-    return Response(img_buffer.getvalue(), mimetype="image/png")
+#     return Response(img_buffer.getvalue(), mimetype="image/png")
 
 
-@app.route("/plot/plotly", methods=["GET"])
-def plotly_visualization():
-    forecast = generate_forecast().reset_index()
-    forecast.columns = ["Date", "Sales"]
+# @app.route("/plot/plotly", methods=["GET"])
+# def plotly_visualization():
+#     forecast = generate_forecast().reset_index()
+#     forecast.columns = ["Date", "Sales"]
 
-    fig = px.line(
-        forecast,
-        x="Date",
-        y="Sales",
-        title="6-Month Sales Forecast",
-        markers=True,
-        template="plotly_dark",
-    )
-    fig.update_layout(hovermode="x unified")
+#     fig = px.line(
+#         forecast,
+#         x="Date",
+#         y="Sales",
+#         title="6-Month Sales Forecast",
+#         markers=True,
+#         template="plotly_dark",
+#     )
+#     fig.update_layout(hovermode="x unified")
 
-    return pio.to_html(fig, full_html=False)
+#     return pio.to_html(fig, full_html=False)
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    app.run(debug=True)
